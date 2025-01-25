@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, current_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite'
@@ -20,6 +20,18 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False, unique=True)
+
+
+# Define review model
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(500), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  # 1 to 5 scale
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    restaurant = db.relationship('Restaurant', backref=db.backref('reviews', lazy=True))
+    user = db.relationship('User', backref=db.backref('reviews', lazy=True))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -64,10 +76,29 @@ def homepage():
     return render_template('homepage.html', restaurants=restaurants)
 
 
+# Route to write a review for a specific restaurant
+@app.route('/restaurant/<int:restaurant_id>/review', methods=['GET', 'POST'])
+@login_required  # Make sure the user is logged in to write a review
+def write_review(restaurant_id):
+    restaurant = Restaurant.query.get_or_404(restaurant_id)
+    if request.method == 'POST':
+        content = request.form['content']
+        rating = request.form['rating']
+
+        # Create a new review and associate it with the restaurant and the logged-in user
+        new_review = Review(content=content, rating=rating, restaurant_id=restaurant.id, user_id=current_user.id)
+        db.session.add(new_review)
+        db.session.commit()
+        flash('Your review has been posted!', 'success')
+        return redirect(url_for('homepage'))  # Redirect to homepage or the restaurant page
+
+    return render_template('write_review.html', restaurant=restaurant)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-        # Here are some restaurants to add reviews to
+        # Add some sample data if the tables are empty
         if Restaurant.query.count() == 0:
             sample_restaurants = [
                 Restaurant(name='Davids Pizza', cuisine='Italian', description='Flamboyant Pizza with the freshest ingredients'),
