@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .restaurant {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .restaurant h2 {
+            margin: 0 0 10px;
+        }
+        .restaurant p {
+            margin: 0 0 10px;
+            color: #666;
+        }
+        .restaurant form {
+            display: flex;
+            flex-direction: column;
+        }
+        .restaurant textarea {
+            resize: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .restaurant button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .restaurant button:hover {
+            background-color: #45a049;
+        }
+        .login-message {
+            text-align: center;
+            margin: 20px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Foodie Reviews</h1>
+
+        <div class="login-message">
+            <p>You must be logged in to add a review.</p>
+        </div>
+
+        <div class="restaurant">
+            <h2>Restaurant 1</h2>
+            <p>Cuisine: Italian</p>
+            <form method="POST" action="/add-review">
+                <textarea name="review" rows="3" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Add Review</button>
+            </form>
+        </div>
+
+        <div class="restaurant">
+            <h2>Davids Pizza</h2>
+            <p>Cuisine: Italian</p>
+            <form method="POST" action="/add-review">
+                <textarea name="review" rows="3" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Add Review</button>
+            </form>
+        </div>
+
+        <div class="restaurant">
+            <h2>Restaurant 3</h2>
+            <p>Cuisine: Mexican</p>
+            <form method="POST" action="/add-review">
+                <textarea name="review" rows="3" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Add Review</button>
+            </form>
+        </div>
+
+        <div class="restaurant">
+            <h2>Restaurant 4</h2>
+            <p>Cuisine: Indian</p>
+            <form method="POST" action="/add-review">
+                <textarea name="review" rows="3" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Add Review</button>
+            </form>
+        </div>
+
+        <div class="restaurant">
+            <h2>Restaurant 5</h2>
+            <p>Cuisine: American</p>
+            <form method="POST" action="/add-review">
+                <textarea name="review" rows="3" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Add Review</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
